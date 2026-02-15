@@ -266,9 +266,9 @@ function shuffler(array) {
   return array;
 }
 // joining the word array to a string
-function generateWords() {
-  const selectedWords = shuffler([...words]);
+function generateWords(array) {
+  const selectedWords = shuffler([...array]);
   return selectedWords.join(" ");
 }
-let longText = generateWords();
+let longText = generateWords(words);
 text.innerText = longText;
