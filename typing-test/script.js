@@ -257,6 +257,13 @@ const text = document.getElementById("text");
 const timer = document.getElementById("timer");
 const tryAgainBtn = document.getElementById("try-again");
 const finalScore = document.getElementById("final-score");
+
+let totalTyped = "";
+let characterIndex = 0;
+let errors = 0;
+let longText = generateWords(words);
+text.textContent = longText;
+
 // Shuffle the words array
 function shuffler(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -270,5 +277,31 @@ function generateWords(array) {
   const selectedWords = shuffler([...array]);
   return selectedWords.join(" ");
 }
-let longText = generateWords(words);
-text.innerText = longText;
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Backspace") {
+    if (totalTyped.length > 0) {
+      totalTyped = totalTyped.slice(0, -1);
+      characterIndex = Math.max(characterIndex - 1, 0);
+    }
+  } else if (e.key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey) {
+    totalTyped += e.key;
+    characterIndex++;
+  }
+  const wordArray = longText.split("");
+  text.innerText = "";
+  errors = 0;
+  for (let i = 0; i < wordArray.length; i++) {
+    const span = document.createElement("span");
+    if (i < totalTyped.length) {
+      if (totalTyped[i] === wordArray[i]) {
+        span.classList.add("correct");
+      } else {
+        span.classList.add("incorrect");
+        errors++;
+      }
+    }
+    span.textContent = wordArray[i];
+    text.appendChild(span);
+  }
+});

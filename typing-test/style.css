@@ -34,7 +34,9 @@ body {
   margin: 20px auto;
   font-size: 1.2rem;
 }
-
+span {
+  min-width: 1rem;
+}
 button {
   color: white;
   background: #111;
