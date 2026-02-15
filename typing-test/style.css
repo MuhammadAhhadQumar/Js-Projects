@@ -13,7 +13,7 @@ body {
   background: whitesmoke;
   overflow: hidden;
 }
-#text-container {
+#text {
   width: 800px;
   height: auto;
   margin: 20px auto;
@@ -27,6 +27,7 @@ body {
   box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
   position: relative;
   cursor: none;
+  overflow: hidden;
 }
 
 #timer {
