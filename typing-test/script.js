@@ -261,7 +261,11 @@ const finalScore = document.getElementById("final-score");
 let totalTyped = "";
 let characterIndex = 0;
 let errors = 0;
+let timeleft = 6;
+let timerInterval;
+let testStarted = false;
 let longText = generateWords(words);
+
 text.textContent = longText;
 
 // Shuffle the words array
@@ -278,7 +282,35 @@ function generateWords(array) {
   return selectedWords.join(" ");
 }
 
+// start the timer on first key press
+function startTimer() {
+  if (!testStarted) {
+    testStarted = true;
+    timerInterval = setInterval(() => {
+      timeleft--;
+      timer.textContent = `Time left: ${timeleft}s`;
+      if (timeleft <= 0) {
+        clearInterval(timerInterval);
+        endTest();
+      }
+    }, 1000);
+  }
+}
+// End the test and calculate the score
+function endTest() {
+  timer.textContent = "Time's up!";
+  finalScore.textContent = `Final WPM:`;
+  text.style.display = "none";
+  tryAgainBtn.style.display = "block";
+}
+// calculate WPM and display final score
+function (params) {
+    
+}
+
+// handle typing and text display and scrolling
 document.addEventListener("keydown", (e) => {
+    startTimer();
   if (e.key === "Backspace") {
     if (totalTyped.length > 0) {
       totalTyped = totalTyped.slice(0, -1);
@@ -304,9 +336,8 @@ document.addEventListener("keydown", (e) => {
     span.textContent = wordArray[i];
     text.appendChild(span);
   }
-    if (totalTyped.length >= 20) {
-      const scrollAmount = (totalTyped.length - 20) * 14;
-      text.scrollLeft = scrollAmount;
-    
+  if (totalTyped.length >= 20) {
+    const scrollAmount = (totalTyped.length - 20) * 14;
+    text.scrollLeft = scrollAmount;
   }
 });
